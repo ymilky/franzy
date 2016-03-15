@@ -88,6 +88,31 @@ The best way to learn is [Franzy Examples](https://github.com/ymilky/franzy-exam
 
 Below are a few naive examples to get you started.
 
+### Serialization
+
+You'll need to pick a format in/out of Kafka.
+
+I recommend you use [Franzy-Nippy](https://github.com/ymilky/franzy-nippy), but think carefully about your use-case. If you're just getting started, the built-in EDN Serializer is a good choice to keep things simple. Of course, all the built-in serializers in Kafka are accessible as well.
+
+For the built-in serializers/deserializers, simply do something like this:
+
+```clojure
+(my.ns
+  (:require [franzy.serialization.deserializers :as deserializers]
+            [franzy.serialization.serializers :as serializers]))
+```
+
+For the add-ons you'll have to reference them as separate dependencies obviously. They follow a pattern like this, replacing `nippy` with the serializer/deserializer name:
+
+```clojure
+(my.ns
+  (:require [franzy.serialization.nippy.deserializers :as deserializers]
+            [franzy.serialization.nippy.serializers :as serializers]))
+```
+
+
+See [Serializers](https://github.com/ymilky/franzy/blob/master/doc/serialization.md) for a discussion.
+
 ### Producers
 
 Creating a producer, using some options just like in a Kafka properties file, but more Clojure-like:
