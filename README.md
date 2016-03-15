@@ -481,6 +481,21 @@ Simple configuration validation example:
 ;;=> ExceptionInfo Value does not match schema: {:auto.offset.reset (not (#{:latest :earliest :none} nil)), :auto.commit.interval.ms (throws? (GreaterThanOrEqualToZero? "forever")), :timeout.typo disallowed-key}  schema.core/validator/fn--4313 (core.clj:151)
 ```
 
+Schemas are constantly being tweaked and exist for the following so far:
+
+* Producer Configuration
+* Consumer Configuration
+* Broker Configuration
+* Kafka Connect Configuration
+* Topic Configuration
+* Producer Types
+* Consumer Types
+* Admin Types
+* Admin Zookeeper Types
+* General Types used in Kafka
+
+Most of the above will help you validate just about any map that comes in/out of Kafka should you choose. Validation can be toggled on/off thanks to schema and by your implementation.
+
 ## Contributing/Roadmap
 
 This library is still very young and is surely filled with bugs. Pull requests are welcome.
