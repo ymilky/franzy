@@ -173,7 +173,7 @@ Synchronous and asynchronous production, using a different producer arity:
                                                                                  "finish him, your way!" ]})
                                                 options)]
         (println "Sync send results:" record-metadata)
-        (println "Sync send results w/record: "record-metadata-records)
+        (println "Sync send results w/record:" record-metadata-records)
         (println "Async send results:" @send-fut))))
 ```
 
@@ -379,6 +379,7 @@ The following code demonstrates some offset management operations and gotchas wi
       ;;notice the different arity and the fact we pass our callback.
       ;; We could have also just set this in the consumer options, in which case, there would be no need to use this arity
       ;; Unless the callback changed per-call, in which case, someone somewhere has read your code, then engaged the grumble-drive.
+      ;;beware of committing async offsets in a separate thread from the poller
       (commit-offsets-async! c {first-topic-partition {:offset 2 :metadata "A Nancy to a Tanya"}} {:offset-commit-callback occ})
       (println "Committed offsets after async callback version:" (committed-offsets c first-topic-partition))
       ;;ok, why are there still no offsets?
