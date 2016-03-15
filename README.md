@@ -73,9 +73,16 @@ Don't - Currently undergoing peer-review and field testing. But you're welcome t
 [ymilky/franzy "0.0.1"]
 ```
 
+## Docs
+
+* Read the browsable [API Docs](http://ymilky.github.io/franzy/)
+* See source for more information about schemas, types, etc.
+* For more about using, validating, and developing schemas, see [Schema](https://github.com/plumatic/schema)
+* Commented source and tests
+
 ## Usage
 
-The best way to learn is [Franzy Examples](https://github.com/ymilky/franzy-examples) and viewing the API docs, sourc,e etc.
+The best way to learn is [Franzy Examples](https://github.com/ymilky/franzy-examples) and viewing the [API docs](http://ymilky.github.io/franzy/), source, etc.
 
 Below are a few naive examples to get you started.
 
@@ -146,7 +153,7 @@ The process to consume data from Kafka follows a pattern something like this:
 * Begin consuming by polling, repeating this step to the end of time
 * Close the consumer when finished (or time itself ends)
 
-This is perhaps an over-simplification as there are a few other nuances, but it's best to look at the official [Kafka](http://kafka.apache.org/documentation.html), then work your way through [franzy-examples](http://github.com/ymilky/frazy-examples) for more details.
+This is perhaps an over-simplification as there are a few other nuances, but it's best to look at the official [Kafka](http://kafka.apache.org/documentation.html), then work your way through [Franzy-Examples](http://github.com/ymilky/frazy-examples) for more details.
 
 For the impatient among you, the major differences between the "manual" consumer and "subscription" or "automatic" consumer are generally offset management and partition assignment.
 
