@@ -52,18 +52,18 @@ In addition to raw features, some reasons you may want to use Franzy:
 * Extreme care to not remove, distort, break, or diminish anything in the existing Java API
 * Sane balance of performance vs. Clojure best-practices vs. ease-of-use
 * Does not force any viewpoint about producing, consuming, administration, etc. on you beyond what Kafka already does
-* À la carte - Lots of goodies and sugar, even for projects that are mostly using pure-Java or don't need the consumer or producer
+* À la carte - Lots of goodies and sugar, even for projects that are using mostly Java or don't need the consumer or producer at all. Build out what you need, no more, no less.
 * Currently being used in a real project, where Kafka is the "spine" of the application, and thus, must be updated, fixed, and changed as needed
 * Relatively future proof
 * Designed to be a good fit with stream processors, particularly [Onyx](https://github.com/onyx-platform/onyx)
-* See rationale in doc
+* See [Rationale](https://github.com/ymilky/franzy/blob/master/doc/rationale.md)
 
 ## Requirements
 
 Requirements may vary slightly depending on your intended usage.
 
-* Clojure 1.8+ - You may be able to use this library on/with earlier versions, but this is untested.
-* Kafka 0.9+ - If using consumer/producer/serializers. Some add-ons may work on earlier versions of Kafka, but this is untested.
+* Clojure 1.8+ - You may be able to compile this library on/with earlier versions, but this is untested.
+* Kafka 0.9+ - Some parts may work on earlier versions, but this is untested.
 
 ## Installation
 
@@ -79,6 +79,7 @@ Don't - Currently undergoing peer-review and field testing. But you're welcome t
 * See source for more information about schemas, types, etc.
 * For more about using, validating, and developing schemas, see [Schema](https://github.com/plumatic/schema)
 * Commented source and tests
+* See the doc folder for more.
 
 ## Usage
 
