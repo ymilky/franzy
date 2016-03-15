@@ -421,6 +421,10 @@ Of particular concern/value to fix/refactor/enhance currently:
 
 Please be aware many problems/issues may be due to Kafka itself or the Java API. As such, before submitting issues, please check these issue trackers first. If there is a reasonable workaround or solution, please leave a note and link to the underlying issues.
 
+## Contact
+
+Find me on [Clojurian Slack](https://clojurians.slack.com/) - @ymilky
+
 ## License
 
 Copyright © 2016 Yossi M. (ymilky).
