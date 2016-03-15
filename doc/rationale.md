@@ -4,6 +4,10 @@ Franzy was created to be a self-serving Kafka client with a few specific goals i
 
 Many people might say, why another Clojure client? There are many reasons, some outlined below. The simple version is I wrote a lot of code for my own project and I was nice enough to open-source. You can be nice enough to either use it or not use it, but don't complain.
 
+I started really getting annoyed with certain clients, including the official clients. At one point I needed something very high-performance, so I started writing a low-level client from scratch in Rust. While it ran awesome for the basics I implemented, I decided I had no interest in maintaining it. Thus, I decided to suck it up and accept that wrappers while crude free me from dealing with most issues while still allowing a decent interface. 
+
+As the Kafka 0.9 client release was announced, I started developing a wrapper directly from their git repo. Months later, I open sourced it and it's what you see now. I have a lot of other projects on my plate, and my interest was a feature complete Kafka platform in addition to the consumer and producer. I hope that's what I have provided and that others will step in to help improve and maintain it. I have a lot of suggestions and ideas, so there's much room for improvement.
+
 ## General
 
 * Pure Clojure data structures, no Kafka Java API objects or otherwise floating around for users of this library to worry about managing
