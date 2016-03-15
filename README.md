@@ -426,11 +426,28 @@ The default partioners are provided if you want to pass them around in Clojure o
 * Range Assignor `range-assignor`
 
 ```clojure
-(my.ns
+(ns my.ns
   (:require [franzy.clients.consumer.partitioners :as partitioners]))
 ```
 
 If you want to control how your partition assignments are laid-out and assigned to consumers, you can implement your own partitioner. A protocol is also available `FranzPartitionAssignor` that will allow you to write your partition assignor with a protocol, for example via defrecord or deftype. You can then call `make-partition-assignor` and it will turn your protocol into a valid interface implementation. You should prefer to simply implement the `PartitionAssignor` interface directly for better performance as the protocol is only meant as a crude-shim for existing code.
+
+### Types/Records
+
+Various concrete type implementations are scattered throughout Franzy and add-ons. Using these will in some cases give you a performance boost and/or reduced memory consumption, and avoid reflection in other cases. This is particularly relevant and beneficial if you find yourself allocating large batches of maps for production, consumption, admin bulk operations, offset management, etc.
+
+Most records are stored in `types.clj` files across many namespaces. These correspond directly to the context they are used, i.e. common, consumer, producer, admin, etc.
+
+For example, you can use the ProducerRecord Clojure record like-so:
+
+```clojure
+(ns ms.ns
+  (:require [franzy.clients.producer.types] :as pt))
+
+;;allocating a few hundred thousand of these, it's just a record....  
+(pt/->ProducerRecord topic partition my-glorious-key my-odoriferous-eminating-value)
+```
+
 
 ### Validation
 
