@@ -426,12 +426,14 @@ Of particular concern/value to fix/refactor/enhance currently:
 * Serializers - More will be added as needed. Certainly the existing serializers can be enhanced and are meant as a blue-print and general usage. As your usage may vary, you may wish to fork or modify the existing serializers accordingly. In order to avoid this, options are easily injected into most serializers. Additional features can also be easily added by closing over values.
 * Testing - more unit tests are required, but adding them is an ongoing effort.
 * Field/Integration testing - If you're using this library in the wild, it may be too early, but I'd love to hear from you and fix any problems.
+* Async helpers, examples, particularly with core.async and/or manifold
+* Useful transformations/eductions/transductions/whatever for working with the various data structures to/from Kafka
 
 Please be aware many problems/issues may be due to Kafka itself or the Java API. As such, before submitting issues, please check these issue trackers first. If there is a reasonable workaround or solution, please leave a note and link to the underlying issues.
 
 ## Contact
 
-Find me on [Clojurian Slack](https://clojurians.slack.com/) - @ymilky
+Find me on [Clojurians Slack](https://clojurians.slack.com/) - @ymilky
 
 ## License
 
