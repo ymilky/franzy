@@ -16,7 +16,9 @@
                            [prismatic/schema "1.0.5"]
                            [org.apache.kafka/kafka-clients "0.9.0.1"]]
             :plugins [[lein-codox "0.9.4"]]
-            :codox {:metadata {:doc/format :markdown}}
+            :codox {:metadata {:doc/format :markdown}
+                    :doc-paths   ["README.md"]
+                    :output-path "doc/api"}
             :profiles {:dev
                                          {:dependencies [[midje "1.7.0"]
                                                          [com.taoensso/timbre "4.3.1"]]
