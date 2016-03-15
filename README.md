@@ -65,6 +65,12 @@ Requirements may vary slightly depending on your intended usage.
 * Clojure 1.8+ - You may be able to compile this library on/with earlier versions, but this is untested.
 * Kafka 0.9+ - Some parts may work on earlier versions, but this is untested.
 
+A good way to get started with Kafka is to use Docker and/or Vagrant. I recommend using a Docker compose stack with Kafka and Zookeeper that lets you scale up/down to test.
+
+Here's at least one to get started, feel free to submit more:
+
+* https://github.com/wurstmeister/kafka-docker
+
 ## Installation
 
 Don't - Currently undergoing peer-review and field testing. But you're welcome to try. Please provide feedback if you encounter an issue.
