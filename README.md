@@ -56,7 +56,7 @@ In addition to raw features, some reasons you may want to use Franzy:
 * Currently being used in a real project, where Kafka is the "spine" of the application, and thus, must be updated, fixed, and changed as needed
 * Relatively future proof
 * Designed to be a good fit with stream processors, particularly [Onyx](https://github.com/onyx-platform/onyx)
-* See [[Rationale]]
+* See rationale in doc
 
 ## Requirements
 
