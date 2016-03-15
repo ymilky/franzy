@@ -108,8 +108,8 @@ Creating a producer, using some options just like in a Kafka properties file, bu
 Synchronous and asynchronous production, using a different producer arity:
 
 ```clojure
-  (let [;;Use a vector if you wish for multiple servers in your cluster
-        pc {:bootstrap.servers ["cliffs-of-insanity.guilder:9092" "fire-swamp.guilder:9092]}
+(let [;;Use a vector if you wish for multiple servers in your cluster
+      pc {:bootstrap.servers ["cliffs-of-insanity.guilder:9092" "fire-swamp.guilder:9092"]}
         ;;Serializes producer record keys that may be keywords
         key-serializer (serializers/keyword-serializer)
         ;;Serializes producer record values as EDN, built-in
@@ -117,24 +117,22 @@ Synchronous and asynchronous production, using a different producer arity:
         ;;optionally create some options, even just use the defaults explicitly
         ;;for those that don't need anything fancy...
         options (pd/make-default-producer-options)
-        topic "land-wars-in-asia"
+        topic " land-wars-in-asia "
         partition 0]
     (with-open [p (producer/make-producer pc key-serializer value-serializer options)]
-      (let [send-fut (send-async! p topic partition :inconceivable {:things-in-fashion [:masks :giants :kerry-calling-saul]} options)
-            record-metadata (send-sync! p "land-wars-in-asia" 0 :conceivable
+      (let [send-fut (send-async! p topic partition :inconceivable {:things-in-fashion
+                                                                    [:masks :giants :kerry-calling-saul]} options)
+            record-metadata (send-sync! p " land-wars-in-asia " 0 :conceivable
                                         {:deadly-poisons [:iocaine-powder :ska-music :vegan-cheese]}
                                         options)
             ;;we can also use records to produce, wrapping our per producer record value (data) as usual
             record-metadata-records (send-sync! p (pt/->ProducerRecord topic partition :vizzini
-                                                                       {:quotes ["the battle of wits has begun!" "finish him, your way!" ]}) options)]
-        (println "Sync send results:" record-metadata)
-        (println "Sync send results w/ record:" record-metadata-records)
-        (println "Async send results:" @send-fut))))
-
-;;Sync send results: {:topic land-wars-in-asia, :partition 0, :offset 68}
-;;Sync send results w/ record: {:topic land-wars-in-asia, :partition 0, :offset 69}
-;;behold -  printed and dereferenced latest, but earliest offset
-;;Async send results: {:topic land-wars-in-asia, :partition 0, :offset 67}
+                                                                       {:quotes [" the battle of wits has begun!"
+                                                                                 "finish him, your way!" ]})
+                                                options)]
+        (println " Sync send results: " record-metadata)
+        (println " Sync send results w/record: " record-metadata-records)
+        (println "Async send results: " @send-fut))))
 ```
 
 ### Consumer Overview
@@ -203,62 +201,61 @@ Below, we create a subscription-based consumer that auto-commits its offsets to 
 
 
 ```clojure
-  (let [cc {:bootstrap.servers       ["127.0.0.1:9092"]
-            :group.id                "submissive-blonde-aussies"
-            ;;jump as early as we can, note this isn't necessarily 0
-            :auto.offset.reset       :earliest
-            ;;here we turn on committing offsets to Kafka itself, every 1000 ms
-            :enable.auto.commit      true
-            :auto.commit.interval.ms 1000}
-        key-deserializer (deserializers/keyword-deserializer)
-        value-deserializer (deserializers/edn-deserializer)
-        topic "land-wars-in-asia"
-        topic-partitions [{:topic topic :partition 0}]
-        ;;Here we are demonstrating the use of a consumer rebalance listener. Normally you'd use this with a manual consumer to deal with offset management.
-        ;;As more consumers join the consumer group, this callback should get fired among other reasons.
-        ;;To implement a manual consumer without this function is folly, unless you care about losing data, and probably your job.
-        ;;One could argue though that most data is not as valuable as we are told. I heard this in a dream once or in intro to Philosophy.
-        rebalance-listener (consumer-rebalance-listener (fn [topic-partitions]
-                                                          (println "topic partitions assigned:" topic-partitions))
-                                                        (fn [topic-partitions]
-                                                          (println "topic partitions revoked:" topic-partitions)))
-        ;;We create custom producer options and set out listener callback like so.
-        ;;Now we can avoid passing this callback every call that requires it, if we so desire
-        ;;Avoiding the extra cost of creating and garbage collecting a listener is a best practice
-        options (cd/make-default-consumer-options {:rebalance-listener-callback rebalance-listener})]
-    (with-open [c (consumer/make-consumer cc key-deserializer value-deserializer options)]
-      ;;Note! - The subscription will read your comitted offsets to position the consumer accordingly
-      ;;If you see no data, try changing the consumer group temporarily
-      ;;If still no, have a look inside Kafka itself, perhaps with franzy-admin!
-      ;;Alternatively, you can setup another threat that will produce to your topic while you consume, and all should be well
-      (subscribe-to-partitions! c [topic])
-      ;;Let's see what we subscribed to, we don't need Cumberbatch to investigate here...
-      (println "Partitions subscribed to:" (partition-subscriptions c))
-      ;;now we poll and see if there's any fun stuff for us
-      (let [cr (poll! c)
-            ;;a naive transducer, written the long way
-            filter-xf (filter (fn [cr] (= (:key cr) :inconceivable)))
-            ;;a naive transducer for viewing the values, again long way
-            value-xf (map (fn [cr] (:value cr)))
-            ;;more misguided transducers
-            inconceivable-transduction (comp filter-xf value-xf)]
+(let [cc {:bootstrap.servers       ["127.0.0.1:9092"]
+          :group.id                "submissive-blonde-aussies"
+          ;;jump as early as we can, note this isn't necessarily 0
+          :auto.offset.reset       :earliest
+          ;;here we turn on committing offsets to Kafka itself, every 1000 ms
+          :enable.auto.commit      true
+          :auto.commit.interval.ms 1000}
+      key-deserializer (deserializers/keyword-deserializer)
+      value-deserializer (deserializers/edn-deserializer)
+      topic "land-wars-in-asia"
+      ;;Here we are demonstrating the use of a consumer rebalance listener. Normally you'd use this with a manual consumer to deal with offset management.
+      ;;As more consumers join the consumer group, this callback should get fired among other reasons.
+      ;;To implement a manual consumer without this function is folly, unless you care about losing data, and probably your job.
+      ;;One could argue though that most data is not as valuable as we are told. I heard this in a dream once or in intro to Philosophy.
+      rebalance-listener (consumer-rebalance-listener (fn [topic-partitions]
+                                                        (println "topic partitions assigned:" topic-partitions))
+                                                      (fn [topic-partitions]
+                                                        (println "topic partitions revoked:" topic-partitions)))
+      ;;We create custom producer options and set out listener callback like so.
+      ;;Now we can avoid passing this callback every call that requires it, if we so desire
+      ;;Avoiding the extra cost of creating and garbage collecting a listener is a best practice
+      options (cd/make-default-consumer-options {:rebalance-listener-callback rebalance-listener})]
+  (with-open [c (consumer/make-consumer cc key-deserializer value-deserializer options)]
+    ;;Note! - The subscription will read your comitted offsets to position the consumer accordingly
+    ;;If you see no data, try changing the consumer group temporarily
+    ;;If still no, have a look inside Kafka itself, perhaps with franzy-admin!
+    ;;Alternatively, you can setup another threat that will produce to your topic while you consume, and all should be well
+    (subscribe-to-partitions! c [topic])
+    ;;Let's see what we subscribed to, we don't need Cumberbatch to investigate here...
+    (println "Partitions subscribed to:" (partition-subscriptions c))
+    ;;now we poll and see if there's any fun stuff for us
+    (let [cr (poll! c)
+          ;;a naive transducer, written the long way
+          filter-xf (filter (fn [cr] (= (:key cr) :inconceivable)))
+          ;;a naive transducer for viewing the values, again long way
+          value-xf (map (fn [cr] (:value cr)))
+          ;;more misguided transducers
+          inconceivable-transduction (comp filter-xf value-xf)]
 
-        (println "Record count:" (record-count cr))
-        (println "Records by topic:" (records-by-topic cr topic))
-        ;;;The source data is a seq, be careful!
-        (println "Records from a topic that doesn't exist:" (records-by-topic cr "no-one-of-consequence"))
-        (println "Records by topic partition:" (records-by-topic-partition cr topic 0))
-        ;;;The source data is a list, so no worries here....
-        (println "Records by a topic partition that doesn't exist:" (records-by-topic-partition cr "no-one-of-consequence" 99))
-        (println "Topic Partitions in the result set:" (record-partitions cr))
-        ;(clojure.pprint/pprint (into [] inconceivable-transduction cr))
-        ;(println "Now just the values of all distinct records:")
-        (println "Put all the records into a vector (calls IReduceInit):" (into [] cr))
-        ;;wow, that was tiring, maybe now we don't want to listen anymore to this topic and take a break, maybe subscribe
-        ;;to something else next poll....
-        (clear-subscriptions! c)
-        (println "After clearing subscriptions, a stunning development! We are now subscribed to the following partitions:"
-                 (partition-subscriptions c)))))
+      (println "Record count:" (record-count cr))
+      (println "Records by topic:" (records-by-topic cr topic))
+      ;;;The source data is a seq, be careful!
+      (println "Records from a topic that doesn't exist:" (records-by-topic cr "no-one-of-consequence"))
+      (println "Records by topic partition:" (records-by-topic-partition cr topic 0))
+      ;;;The source data is a list, so no worries here....
+      (println "Records by a topic partition that doesn't exist:" (records-by-topic-partition cr "no-one-of-consequence" 99))
+      (println "Topic Partitions in the result set:" (record-partitions cr))
+      ;(clojure.pprint/pprint (into [] inconceivable-transduction cr))
+      ;(println "Now just the values of all distinct records:")
+      (println "Put all the records into a vector (calls IReduceInit):" (into [] cr))
+      ;;wow, that was tiring, maybe now we don't want to listen anymore to this topic and take a break, maybe subscribe
+      ;;to something else next poll....
+      (clear-subscriptions! c)
+      (println "After clearing subscriptions, a stunning development! We are now subscribed to the following partitions:"
+               (partition-subscriptions c)))))
 ```
 
 ### Working with Consumer Results
@@ -291,60 +288,60 @@ Callbacks for offset commits, consumer rebalance events, and more are provided t
 The following code demonstrates some offset management operations and gotchas with Kafkas that newcomers often struggle with:
 
 ```clojure
-  (let [cc {:bootstrap.servers ["127.0.0.1:9092"]
-            :group.id          "hungry-eels"
-            :auto.offset.reset :earliest}
-        key-deserializer (deserializers/keyword-deserializer)
-        value-deserializer (deserializers/edn-deserializer)
-        options (cd/make-default-consumer-options)
-        topic "land-wars-in-asia"
-        first-topic-partition {:topic topic :partition 0}
-        second-topic-partition {:topic topic :partition 1}
-        topic-partitions [first-topic-partition second-topic-partition]]
-    (with-open [c (consumer/make-consumer cc key-deserializer value-deserializer options)]
-      ;;first we'll make sure we can assign some partitions. We could also subscribe instead, but for examples, this is easier.
-      (assign-partitions! c topic-partitions)
-      (seek-to-beginning-offset! c topic-partitions)
-      ;;let's peek at what the next offset is.....it should be 0 if we're at the beginning
-      (println "Next offset:" (next-offset c first-topic-partition))
-      ;;now maybe we want to save some metadata about the beginning offset....
-      ;;Notice, we're sending a map with the keys a topic partition map as the key, and the value as an offset metadata map
-      (commit-offsets-sync! c {first-topic-partition {:offset 0, :metadata "In the beginning.....that was a long time ago."}})
-      ;;Now let's have a peek at what we committed. If you've done this before, there might be other data obviously
-      (println "Committed offsets so far:" (committed-offsets c first-topic-partition))
-      ;;Now let's commit the next offset (there should be one if you produced data already), but this time async
-      (commit-offsets-async! c {first-topic-partition {:offset 1 :metadata "Those who count from one, are but two."}})
-      ;;Another peek at the results, but this might surprise you if your thinking cap is at the cleaners
-      (println "Committed offsets after first async call:" (committed-offsets c first-topic-partition))
-      ;;The problem here is you passed the offsets as the options map! Don't do it.
-      ;; OK, if not then what about other arities?
-      (commit-offsets-async! c {first-topic-partition {:offset 1 :metadata "Those who count from one, are but two."}} nil)
-      (println "Committed offsets after proper async call:" (committed-offsets c first-topic-partition))
-      ;;Nope, still no new data, but what about doing it sync
-      (commit-offsets-sync! c {first-topic-partition {:offset 1 :metadata "Those who count from one, are but two."}})
-      (println "Committed offsets after 2nd sync call:" (committed-offsets c first-topic-partition))
-      ;;OK, great, doing it sync worked, but why?
-      ;;Let's create some callbacks so we have a better idea what is going on
-      ;;We could use these to do all kinds of fun stuff, like store this metadata in our own shiny database
-      (let [occ (offset-commit-callback (fn [offset-metadata]
-                                          (println "By the wind shalt be, commit succeeded:" offset-metadata))
-                                        (fn [e]
-                                          (println "Offsets failed to commit, just like you:" e)))]
-        ;;notice the different arity and the fact we pass our callback.
-        ;; We could have also just set this in the consumer options, in which case, there would be no need to use this arity
-        ;; Unless the callback changed per-call, in which case, someone somewhere has read your code, then engaged the grumble-drive.
-        (commit-offsets-async! c {first-topic-partition {:offset 2 :metadata "A Nancy to a Tanya"}} {:offset-commit-callback occ})
-        (println "Committed offsets after async callback version:" (committed-offsets c first-topic-partition))
-        ;;ok, why are there still no offsets?
-        ;;let's try to follow the Franzy documentation! READ IT!
-        ;;first, let's poll from offset 2, so we'll need to seek to it
-        (seek-to-offset! c first-topic-partition 2)
-        ;;and to poll, results are not important as long as we got at least 1 - you did populate the data, didn't you?
-        (poll! c)
-        (commit-offsets-async! c {first-topic-partition {:offset 2 :metadata "A Nancy to a Tanya"}} {:offset-commit-callback occ})
-        (println "Committed offsets after listening to the doc about polling with async commits:" (committed-offsets c first-topic-partition))
-        ;;all is well, that was certainly traumatic.....
-        )))
+(let [cc {:bootstrap.servers ["127.0.0.1:9092"]
+          :group.id          "hungry-eels"
+          :auto.offset.reset :earliest}
+      key-deserializer (deserializers/keyword-deserializer)
+      value-deserializer (deserializers/edn-deserializer)
+      options (cd/make-default-consumer-options)
+      topic "land-wars-in-asia"
+      first-topic-partition {:topic topic :partition 0}
+      second-topic-partition {:topic topic :partition 1}
+      topic-partitions [first-topic-partition second-topic-partition]]
+  (with-open [c (consumer/make-consumer cc key-deserializer value-deserializer options)]
+    ;;first we'll make sure we can assign some partitions. We could also subscribe instead, but for examples, this is easier.
+    (assign-partitions! c topic-partitions)
+    (seek-to-beginning-offset! c topic-partitions)
+    ;;let's peek at what the next offset is.....it should be 0 if we're at the beginning
+    (println "Next offset:" (next-offset c first-topic-partition))
+    ;;now maybe we want to save some metadata about the beginning offset....
+    ;;Notice, we're sending a map with the keys a topic partition map as the key, and the value as an offset metadata map
+    (commit-offsets-sync! c {first-topic-partition {:offset 0, :metadata "In the beginning.....that was a long time ago."}})
+    ;;Now let's have a peek at what we committed. If you've done this before, there might be other data obviously
+    (println "Committed offsets so far:" (committed-offsets c first-topic-partition))
+    ;;Now let's commit the next offset (there should be one if you produced data already), but this time async
+    (commit-offsets-async! c {first-topic-partition {:offset 1 :metadata "Those who count from one, are but two."}})
+    ;;Another peek at the results, but this might surprise you if your thinking cap is at the cleaners
+    (println "Committed offsets after first async call:" (committed-offsets c first-topic-partition))
+    ;;The problem here is you passed the offsets as the options map! Don't do it.
+    ;; OK, if not then what about other arities?
+    (commit-offsets-async! c {first-topic-partition {:offset 1 :metadata "Those who count from one, are but two."}} nil)
+    (println "Committed offsets after proper async call:" (committed-offsets c first-topic-partition))
+    ;;Nope, still no new data, but what about doing it sync
+    (commit-offsets-sync! c {first-topic-partition {:offset 1 :metadata "Those who count from one, are but two."}})
+    (println "Committed offsets after 2nd sync call:" (committed-offsets c first-topic-partition))
+    ;;OK, great, doing it sync worked, but why?
+    ;;Let's create some callbacks so we have a better idea what is going on
+    ;;We could use these to do all kinds of fun stuff, like store this metadata in our own shiny database
+    (let [occ (offset-commit-callback (fn [offset-metadata]
+                                        (println "By the wind shalt be, commit succeeded:" offset-metadata))
+                                      (fn [e]
+                                        (println "Offsets failed to commit, just like you:" e)))]
+      ;;notice the different arity and the fact we pass our callback.
+      ;; We could have also just set this in the consumer options, in which case, there would be no need to use this arity
+      ;; Unless the callback changed per-call, in which case, someone somewhere has read your code, then engaged the grumble-drive.
+      (commit-offsets-async! c {first-topic-partition {:offset 2 :metadata "A Nancy to a Tanya"}} {:offset-commit-callback occ})
+      (println "Committed offsets after async callback version:" (committed-offsets c first-topic-partition))
+      ;;ok, why are there still no offsets?
+      ;;let's try to follow the Franzy documentation! READ IT!
+      ;;first, let's poll from offset 2, so we'll need to seek to it
+      (seek-to-offset! c first-topic-partition 2)
+      ;;and to poll, results are not important as long as we got at least 1 - you did populate the data, didn't you?
+      (poll! c)
+      (commit-offsets-async! c {first-topic-partition {:offset 2 :metadata "A Nancy to a Tanya"}} {:offset-commit-callback occ})
+      (println "Committed offsets after listening to the doc about polling with async commits:" (committed-offsets c first-topic-partition))
+      ;;all is well, that was certainly traumatic.....
+      )))
 ```
 
 ### Metrics
@@ -356,10 +353,10 @@ The code for a producer and consumer uses the same protocol. The consumer case i
 ```clojure
   (let [cc {:bootstrap.servers ["127.0.0.1:9092"]
             :group.id          "mawage"}
-        key-deserializer (deserializers/keyword-deserializer) ;;Deserializes record keys
-        value-deserializer (deserializers/edn-deserializer) ;;Deserializes record values
+        key-deserializer (deserializers/keyword-deserializer)
+        value-deserializer (deserializers/edn-deserializer)
         options (cd/make-default-consumer-options)]
-    (with-open [^Closeable c (consumer/make-consumer cc key-deserializer value-deserializer options)]
+    (with-open [c (consumer/make-consumer cc key-deserializer value-deserializer options)]
       ;;Now let's say we want to know something about how consuming is going. Perhaps we are too greedy.
       ;;We can get a plethora of metrics, log them, exert back-pressure on the producer if needed, eject, etc.
       ;;All of this, by parsing this wonderful thing below. JMXers, rejoice.
