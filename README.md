@@ -146,16 +146,21 @@ Synchronous and asynchronous production, using a different producer arity:
 
 ### Consumer Overview
 
-There are 2-ways provided to consume data from Kafka - manually and automatically.
+In order to consume data from Kafka, you must have one or more valid partitions per topic assigned. There are 2-ways to get a partition assignment from Kafka - manually and automatically.
+
+The manual-assignment case is well suited to users who are tracking offsets manually or want to override and commit offset positions. Automatic assignment is performed via subscription and best used when storing offsets in Kafka itself.
 
 The process to consume data from Kafka follows a pattern something like this:
 
+* Setup threads for consuming
 * Assign or Subscribe (Automatically assign) at least one partition from a given topic to the consumer
 * Resume consumption from last committed offset or seek to a specific offset to determine where consumptions begins
-* Begin consuming by polling, repeating this step to the end of time
+* Begin consuming by polling in a polling thread, repeating this step to the end of time
 * Close the consumer when finished (or time itself ends)
 
-This is perhaps an over-simplification as there are a few other nuances, but it's best to look at the official [Kafka](http://kafka.apache.org/documentation.html), then work your way through [Franzy-Examples](http://github.com/ymilky/frazy-examples) for more details.
+It is vitally important that you undestand the implicaitons of threading, polling, partition assignments, and offsets. This is documented in the official [Kafka](http://kafka.apache.org/documentation.html)  docs, go read it, now, and the [consumer Java API](https://kafka.apache.org/090/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html) docs too.
+
+This is perhaps an over-simplification as there are a few other nuances.
 
 For the impatient among you, the major differences between the "manual" consumer and "subscription" or "automatic" consumer are generally offset management and partition assignment.
 
@@ -165,6 +170,8 @@ Likewise, there's nothing stopping you from committing offsets to Kafka itself m
 You will find most of what works for the manual and subscription consumers is the same. The details are mainly in which protocols you use. If you want to force one paradigm over another, simply don't call or require the protocols of the other.
 
 It is extremely important to note that consuming via subscriptions and using manual assignments are mutually exclusive. If you attempt to do so at the same time, your code will fail. Although Kafka itself will protect you from any adverse effects of this behavior by throwing an exception, it is not guaranteed that this behavior will remain in future versions as the Kafka API changes.
+
+The examples given here do not create threads for the sake of simplicity. I leave this as an exercise to you as your use-cases will determine your threading model. My colleagues and I prefer to use core.async which makes it simple to transduce results directly on to a channel, manage thread lifecycles, etc. We've also used core.async with Manifold to great success. Understand that when you poll, work with offsets, etc., many of these are blocking operations.
 
 ### Manual Consumer
 
