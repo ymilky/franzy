@@ -448,6 +448,7 @@ For example, you can use the ProducerRecord Clojure record like-so:
 (pt/->ProducerRecord topic partition my-glorious-key my-odoriferous-eminating-value)
 ```
 
+More importantly, these can easily be validated since each type has a corresponding schema, usually in a `schema.clj` file.
 
 ### Validation
 
