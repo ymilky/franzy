@@ -73,6 +73,8 @@ Don't - Currently undergoing peer-review and field testing. But you're welcome t
 [ymilky/franzy "0.0.1"]
 ```
 
+[![Clojars Project](https://img.shields.io/clojars/v/ymilky/franzy.svg)](https://clojars.org/ymilky/franzy)
+
 ## Docs
 
 * Read the browsable [API Docs](http://ymilky.github.io/franzy/)
