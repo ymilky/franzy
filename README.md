@@ -1,8 +1,8 @@
 # Franzy
 
-Franzy is a Clojure [Apache Kafka](http://kafka.apache.org/documentation.html) client.
+Franzy is a Clojure [Apache Kafka](http://kafka.apache.org/documentation.html) suite of libraries for Kafka. It includes libraries for Kafka consumers, producers, partitioners, callbacks, serializers, and deserializers, as well as an admin client, embedded Kafka brokers, validations for all major Kafka types, configuration management.
 
-The main goal of Franzy is to make life easier for producing, consuming, administering, configuring, and generally working with all things, Kafka.
+The main goal of Franzy is to make life easier for working with Kafka from Clojure. Franzy provides a foundation for building higher-level abstractions for whatever your needs might be when interacting with Kafka.
 
 ## Platform
 
