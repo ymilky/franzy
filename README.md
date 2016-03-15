@@ -76,6 +76,7 @@ Don't - Currently undergoing peer-review and field testing. But you're welcome t
 ## Docs
 
 * Read the browsable [API Docs](http://ymilky.github.io/franzy/)
+* [Franzy Examples](https://github.com/ymilky/franzy-examples) for lots of notes, advice, and growing examples
 * See source for more information about schemas, types, etc.
 * For more about using, validating, and developing schemas, see [Schema](https://github.com/plumatic/schema)
 * Commented source and tests
