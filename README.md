@@ -159,22 +159,22 @@ Synchronous and asynchronous production, using a different producer arity:
         ;;optionally create some options, even just use the defaults explicitly
         ;;for those that don't need anything fancy...
         options (pd/make-default-producer-options)
-        topic " land-wars-in-asia "
+        topic "land-wars-in-asia"
         partition 0]
     (with-open [p (producer/make-producer pc key-serializer value-serializer options)]
       (let [send-fut (send-async! p topic partition :inconceivable {:things-in-fashion
                                                                     [:masks :giants :kerry-calling-saul]} options)
-            record-metadata (send-sync! p " land-wars-in-asia " 0 :conceivable
+            record-metadata (send-sync! p "land-wars-in-asia" 0 :conceivable
                                         {:deadly-poisons [:iocaine-powder :ska-music :vegan-cheese]}
                                         options)
             ;;we can also use records to produce, wrapping our per producer record value (data) as usual
             record-metadata-records (send-sync! p (pt/->ProducerRecord topic partition :vizzini
-                                                                       {:quotes [" the battle of wits has begun!"
+                                                                       {:quotes ["the battle of wits has begun!"
                                                                                  "finish him, your way!" ]})
                                                 options)]
-        (println " Sync send results: " record-metadata)
-        (println " Sync send results w/record: " record-metadata-records)
-        (println "Async send results: " @send-fut))))
+        (println "Sync send results:" record-metadata)
+        (println "Sync send results w/record: "record-metadata-records)
+        (println "Async send results:" @send-fut))))
 ```
 
 ### Consumer Overview
