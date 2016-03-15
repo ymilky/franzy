@@ -418,6 +418,20 @@ The code for a producer and consumer uses the same protocol. The consumer case i
                                      :value 0.0}
 ```
 
+### Partitioners
+
+The default partioners are provided if you want to pass them around in Clojure or for consumer configuration:
+
+* Round Robin Assignor - `round-robin-assignor`
+* Range Assignor `range-assignor`
+
+```clojure
+(my.ns
+  (:require [franzy.clients.consumer.partitioners :as partitioners]))
+```
+
+If you want to control how your partition assignments are laid-out and assigned to consumers, you can implement your own partitioner. A protocol is also available `FranzPartitionAssignor` that will allow you to write your partition assignor with a protocol, for example via defrecord or deftype. You can then call `make-partition-assignor` and it will turn your protocol into a valid interface implementation. You should prefer to simply implement the `PartitionAssignor` interface directly for better performance as the protocol is only meant as a crude-shim for existing code.
+
 ### Validation
 
 Franzy provides validation for all map structures and data types used. You may use this functionality even if you are not interested in the rest of Franzy.
