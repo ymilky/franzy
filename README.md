@@ -133,8 +133,11 @@ Creating a producer, using some options just like in a Kafka properties file, bu
           :buffer.memory     33554432}
       ;;normally, just inject these direct and be aware some serializers may need to be closed,
       ;; adding to binding here to make this clear
-      key-serializer (serializers/string-serializer)        ;;Serializes producer record keys as strings
-      value-serializer (serializers/string-serializer)      ;;Serializes producer record values as strings
+      
+      ;;Serializes producer record keys as strings
+      key-serializer (serializers/string-serializer)
+      ;;Serializes producer record values as strings
+      value-serializer (serializers/string-serializer)
       ]
   (with-open [p (producer/make-producer pc key-serializer value-serializer)]
     (partitions-for p "test")))
@@ -297,7 +300,7 @@ Below, we create a subscription-based consumer that auto-commits its offsets to 
       ;;;The source data is a list, so no worries here....
       (println "Records by a topic partition that doesn't exist:" (records-by-topic-partition cr "no-one-of-consequence" 99))
       (println "Topic Partitions in the result set:" (record-partitions cr))
-      ;(clojure.pprint/pprint (into [] inconceivable-transduction cr))
+      (clojure.pprint/pprint (into [] inconceivable-transduction cr))
       ;(println "Now just the values of all distinct records:")
       (println "Put all the records into a vector (calls IReduceInit):" (into [] cr))
       ;;wow, that was tiring, maybe now we don't want to listen anymore to this topic and take a break, maybe subscribe
