@@ -500,6 +500,16 @@ Schemas are constantly being tweaked and exist for the following so far:
 
 Most of the above will help you validate just about any map that comes in/out of Kafka should you choose. Validation can be toggled on/off thanks to schema and by your implementation.
 
+### Broker Discovery
+
+If you need to discover one or more available brokers, there are a few ways to do this:
+
+* Use [Franzy-Admin](https://github.com/ymilky/franzy-admin) and one of the broker functions such as `all-brokers` - this will give you a full list of brokers for all channels, including Plaintext, SSL, SASSL, etc. This is likely the preferred discovery method for most use-cases. You can also perform more specific queries by channel, broker id, and more using some of the functions in [cluster.clj](https://github.com/ymilky/franzy-admin/blob/master/src/franzy/admin/cluster.clj).
+* If you already are inside a consumer or producer, `list-topics` and `partitions-for` return some information, based on the context.
+* Query Zookeeper directly. This is generally unneeded since under the hood, Franzy-Admin does this for you, but if you are already connected to Zookeeper with an existing client, you can go ahead and do this safely. Franzy-Admin provides a few convenience functions that will return the correct paths in Zookeeper for you to query against, so no need to hard-code paths.
+
+**coming soon - helper functions for tranducing the results of the above into useful forms for use cases such as bootstrap.servers**
+
 ## Contributing/Roadmap
 
 This library is still very young and is surely filled with bugs. Pull requests are welcome.
