@@ -46,5 +46,8 @@ Some general best practices:
 * Do not subscribe and attempt to manually assign offsets at the same time. They are mutually exclusive. You have been warned, again.
 * Do not assume offset 0 is the beginning of a topic. As the log grows, messages may be removed over time.
 * If manually managing offsets, ensure you use a high-performance, fault-tolerant, fast data store. Fault-tolerance should be stressed in this situation as losing an offset could cause data loss.
+* Ensure you commit offsets in the same thread you are polling.
+* It is often a more workable solution for those manually comitting offsets to use batching. Take a few items from your poll in a batch, process them, and commit when you know your batch has ack'd sucessfully in your application code. A consumer poll can return thousands of records and assuming autocommit will always work if you cannot miss data requires that you have great confidence in what is processing your batch.
+* One way to get a bit more robust capabilities when doing manual offset committing is to pass batches to a stream processor such as Onyx that can ack when it succeeds. When the job succeeds, you can then commit your offsets to Kafka safely. Some advantages are many stream processors have at-least-once or at-most-once semantics, retries, job durability, job state management, and more to make your life easier. If storing your offsets externally or in a separate process from the consumer, you can consider using the job itself to committ offsets as the last step/complete step.
 
 
