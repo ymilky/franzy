@@ -11,7 +11,7 @@
    :offset-commit-callback      (callbacks/offset-commit-callback)
    :rebalance-listener-callback (callbacks/no-op-consumer-rebalance-listener)})
 
-(s/defn ^:always-validate make-default-consumer-options :- cs/ConsumerOptions
+(s/defn make-default-consumer-options :- cs/ConsumerOptions
   "Creates default consumer options, merging any provided options accordingly."
   ([]
     (make-default-consumer-options nil))
