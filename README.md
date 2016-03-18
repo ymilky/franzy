@@ -15,7 +15,7 @@ Franzy breaks up its functionality into several different libraries to minimize 
 * [Franzy Nippy](https://github.com/ymilky/franzy-nippy) - Nippy Serializer/Deserializer for Kafka.
 * [Franzy Fressian](https://github.com/ymilky/franzy-fressian) - Fressian Serializer/Deserializer for kafka.
 * [Franzy JSON](https://github.com/ymilky/franzy-json) - JSON/SMILE Serializer/Deserialzer for Kafka.
-* [Franzy Transit](https://github.com/ymilky/franzy-transit) - Transit Serializer/Deserializer for Kafka, coming soon.
+* [Franzy Transit](https://github.com/ymilky/franzy-transit) - Transit Serializer/Deserializer for Kafka.
 * [Franzy Embedded](https://github.com/ymilky/franzy-embedded) - Full featured embedded Kafka server for testing/dev, with multiple implementations including concrete types and components.
 * [Franzy Examples](https://github.com/ymilky/franzy-examples) - Growing project of examples using all the above, to learn at your leisure.
 
