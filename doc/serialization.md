@@ -31,7 +31,7 @@ The following serializers/deserializers are currently/planned to be available fo
 | Nippy                | very good                  | great                    | great, probably the best current balance of speed and compression                |
 | Fressian             | good                       | very good                | good, but prefer nippy in most cases unless domain reasons                       |
 | Debug                | poor/depends               | depends                  | ok, not intended for production use, but can compose anything and pass back info |
-| Transit (planned)    | great                      | good                     | great, but should match use case, otherwise prefer nippy                         |
+| Transit              | great                      | good                     | great, but should match use case, otherwise prefer nippy                         |
 | UUID/SQUID (planned) | great                      | none                     | poor, useful for keys or simple data only                                        |
 | Gzip (planned)       | great                      | very good                | prefer nippy, unless specific domain reason                                      |
 
@@ -48,4 +48,5 @@ The following serializers/deserializers are currently/planned to be available fo
 * [Franzy-JSON](https://github.com/ymilky/franzy-json) - JSON Serialization with optional Smile support
 * [Franzy-Nippy](https://github.com/ymilky/franzy-nippy) - Nippy serialization - *highly recommended*
 * [Franzy-Fressian](https://github.com/ymilky/franzy-fressian) - [Fressian](https://github.com/Datomic/fressian) serialization, especially useful for those integrating with [Datomic](http://www.datomic.com)
+* [Franzy Transit](https://github.com/ymilky/franzy-transit) - [Transit]() with support for JSON, JSON-verbose, msgpack
 * More soon...
