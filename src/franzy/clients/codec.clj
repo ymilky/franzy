@@ -15,10 +15,8 @@
   "Protocol used to encode and decode values between Franzy and the Kafka Java client.
 
   Extend this protocol to implement conversions between types and modify existing conversions as needed."
-  (encode [v]
-    "Encodes Clojure values into Kafka Java client values.")
-  (decode [v]
-    "Decodes Kafka Java client values to Clojure."))
+  (encode [v])
+  (decode [v]))
 
 (defn map->topic-partition
   "Convert a map of topic and partition to a Kafka TopicPartition.
