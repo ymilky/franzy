@@ -11,7 +11,7 @@
    :close-timeout-unit TimeUnit/MILLISECONDS
    :send-callback      (callbacks/send-callback)})
 
-(s/defn ^:always-validate make-default-producer-options :- ps/ProducerOptions
+(s/defn make-default-producer-options :- ps/ProducerOptions
   "Creates default producer options, mergining any provided options accordingly."
   ([]
     (make-default-producer-options nil))
