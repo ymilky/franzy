@@ -1,6 +1,6 @@
 # Franzy
 
-Franzy is a Clojure [Apache Kafka](http://kafka.apache.org/documentation.html) suite of libraries for Kafka. It includes libraries for Kafka consumers, producers, partitioners, callbacks, serializers, and deserializers, as well as an admin client, embedded Kafka brokers, validations for all major Kafka types, configuration management.
+Franzy is a suite of Clojure libraries for [Apache Kafka](http://kafka.apache.org/documentation.html). It includes libraries for Kafka consumers, producers, partitioners, callbacks, serializers, and deserializers, as well as an admin client, embedded Kafka brokers, validations for all major Kafka types, configuration management.
 
 The main goal of Franzy is to make life easier for working with Kafka from Clojure. Franzy provides a foundation for building higher-level abstractions for whatever your needs might be when interacting with Kafka.
 
@@ -509,6 +509,10 @@ If you need to discover one or more available brokers, there are a few ways to d
 * Query Zookeeper directly. This is generally unneeded since under the hood, Franzy-Admin does this for you, but if you are already connected to Zookeeper with an existing client, you can go ahead and do this safely. Franzy-Admin provides a few convenience functions that will return the correct paths in Zookeeper for you to query against, so no need to hard-code paths.
 
 **coming soon - helper functions for tranducing the results of the above into useful forms for use cases such as bootstrap.servers**
+
+### Other
+
+* For embedded Zookeeper servers and clusters, see [Travel Zoo](https://github.com/ymilky/travel-zoo)
 
 ## Contributing/Roadmap
 
