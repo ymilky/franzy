@@ -105,7 +105,7 @@ I recommend you use [Franzy-Nippy](https://github.com/ymilky/franzy-nippy), but 
 For the built-in serializers/deserializers, simply do something like this:
 
 ```clojure
-(my.ns
+(ns my.ns
   (:require [franzy.serialization.deserializers :as deserializers]
             [franzy.serialization.serializers :as serializers]))
 ```
@@ -113,7 +113,7 @@ For the built-in serializers/deserializers, simply do something like this:
 For the add-ons you'll have to reference them as separate dependencies obviously. They follow a pattern like this, replacing `nippy` with the serializer/deserializer name:
 
 ```clojure
-(my.ns
+(ns my.ns
   (:require [franzy.serialization.nippy.deserializers :as deserializers]
             [franzy.serialization.nippy.serializers :as serializers]))
 ```
@@ -122,6 +122,9 @@ For the add-ons you'll have to reference them as separate dependencies obviously
 See [Serializers](https://github.com/ymilky/franzy/blob/master/doc/serialization.md) for a discussion.
 
 ### Producers
+
+For production use, ensure you are not creating/recreating the producer constantly. Additionally, be sure you are not holding any stray references before shutting down the producer. The examples below are only for getting a feel for what is possible in the API, actual usage will vary greatly depending on your data flow.
+
 
 Creating a producer, using some options just like in a Kafka properties file, but more Clojure-like:
 
@@ -451,7 +454,7 @@ Most records are stored in `types.clj` files across many namespaces. These corre
 For example, you can use the ProducerRecord Clojure record like-so:
 
 ```clojure
-(ns ms.ns
+(ns my.ns
   (:require [franzy.clients.producer.types] :as pt))
 
 ;;allocating a few hundred thousand of these, it's just a record....  
@@ -510,9 +513,16 @@ If you need to discover one or more available brokers, there are a few ways to d
 
 **coming soon - helper functions for tranducing the results of the above into useful forms for use cases such as bootstrap.servers**
 
-### Other
+### Testing/Dev
 
-* For embedded Zookeeper servers and clusters, see [Travel Zoo](https://github.com/ymilky/travel-zoo)
+You can run an embedded cluster of Zookeeper and/or Kafka using the following together or in conjunction with other libraries that provide similar functionality:
+
+* For embedded Kafka, see [Franzy-Embedded](https://github.com/ymilky/franzy-embedded), see tests and docs for examples.
+* For embedded Zookeeper servers and clusters, see [Travel Zoo](https://github.com/ymilky/travel-zoo), see tests and docs for examples.
+
+Both libraries above provide concrete types for auditing, avoiding reflection, ease-of-use as well as protocols and versions using component. Both also have full Clojure APIs.
+
+Another option is to use docker containers. I have successfully tested both of the above options mixed with docker without issue. In general, be sure all servers can see each other on the network to avoid problems.
 
 ## Contributing/Roadmap
 
