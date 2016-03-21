@@ -197,7 +197,7 @@ The process to consume data from Kafka follows a pattern something like this:
 * Begin consuming by polling in a polling thread, repeating this step to the end of time
 * Close the consumer when finished (or time itself ends)
 
-It is vitally important that you undestand the implicaitons of threading, polling, partition assignments, and offsets. This is documented in the official [Kafka](http://kafka.apache.org/documentation.html)  docs, go read it, now, and the [consumer Java API](https://kafka.apache.org/090/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html) docs too.
+It is vitally important that you understand the implications of threading, polling, partition assignments, and offsets. This is documented in the official [Kafka](http://kafka.apache.org/documentation.html)  docs, go read it, now, and the [consumer Java API](https://kafka.apache.org/090/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html) docs too.
 
 This is perhaps an over-simplification as there are a few other nuances.
 
