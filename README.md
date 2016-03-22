@@ -1,8 +1,8 @@
 # Franzy
 
-Franzy is a suite of Clojure libraries for [Apache Kafka](http://kafka.apache.org/documentation.html). It includes libraries for Kafka consumers, producers, partitioners, callbacks, serializers, and deserializers, as well as an admin client, embedded Kafka brokers, validations for all major Kafka types, configuration management.
+Franzy is a suite of Clojure libraries for [Apache Kafka](http://kafka.apache.org/documentation.html). It includes libraries for Kafka consumers, producers, partitioners, callbacks, serializers, and deserializers. Additionally, there are libraries for administration, testing, mocking, running embedded Kafka brokers and zookeeper clusters, and more.
 
-The main goal of Franzy is to make life easier for working with Kafka from Clojure. Franzy provides a foundation for building higher-level abstractions for whatever your needs might be when interacting with Kafka.
+The main goal of Franzy is to make life easier for working with Kafka from Clojure. Franzy provides a foundation for building higher-level abstractions for whatever your needs might be.
 
 ## Platform
 
@@ -68,15 +68,11 @@ Requirements may vary slightly depending on your intended usage.
 * Clojure 1.8+ - You may be able to compile this library on/with earlier versions, but this is untested.
 * Kafka 0.9+ - Some parts may work on earlier versions, but this is untested.
 
-A good way to get started with Kafka is to use Docker and/or Vagrant. I recommend using a Docker compose stack with Kafka and Zookeeper that lets you scale up/down to test.
-
-Here's at least one to get started, feel free to submit more:
-
-* https://github.com/wurstmeister/kafka-docker
+A good way to get started with Kafka is to use Docker and/or Vagrant. I recommend using a Docker compose stack with Kafka and Zookeeper that lets you scale up/down to test. You can also use the embedded Kafka and Zookeeper libraries listed above and discussed in the Testing/Dev section.
 
 ## Installation
 
-Don't - Currently undergoing peer-review and field testing. But you're welcome to try. Please provide feedback if you encounter an issue.
+Currently undergoing peer-review and field testing. It works so far for many people and organizations, but requires more testing. You're welcome to try. Please provide feedback if you encounter an issue.
 
 ```
 [ymilky/franzy "0.0.1"]
@@ -527,6 +523,10 @@ Both libraries above provide concrete types for auditing, avoiding reflection, e
 
 Another option is to use docker containers. I have successfully tested both of the above options mixed with docker without issue. In general, be sure all servers can see each other on the network to avoid problems.
 
+Here's at least one Docker image that uses Docker compose and includes Zookeeper and Kafka.
+
+* https://github.com/wurstmeister/kafka-docker
+
 ## Contributing/Roadmap
 
 This library is still very young and is surely filled with bugs. Pull requests are welcome.
@@ -540,7 +540,7 @@ Of particular concern/value to fix/refactor/enhance currently:
 * Async helpers, examples, particularly with core.async and/or manifold
 * Useful transformations/eductions/transductions/whatever for working with the various data structures to/from Kafka
 
-Please be aware many problems/issues may be due to Kafka itself or the Java API. As such, before submitting issues, please check these issue trackers first. If there is a reasonable workaround or solution, please leave a note and link to the underlying issues.
+Please be aware many problems/issues may be due to Kafka itself or the Java API. As such, before submitting issues, please check the Kafka official issue trackers first. If there is a reasonable workaround or solution, please leave a note and link to the underlying issues.
 
 ## Contact
 
