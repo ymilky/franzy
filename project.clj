@@ -1,4 +1,4 @@
-(defproject ymilky/franzy "0.0.1-SNAPSHOT"
+(defproject ymilky/franzy "0.0.1"
             :description "Clojure Kafka client with support for Kafka producer, consumer, rebalancing, administration, and validation."
             :url "https://github.com/ymilky/franzy"
             :author "ymilky and others, but see README"
@@ -14,7 +14,8 @@
                                         :sign-releases false}}
             :dependencies [[org.clojure/clojure "1.8.0"]
                            [prismatic/schema "1.0.5"]
-                           [org.apache.kafka/kafka-clients "0.9.0.1"]]
+                           [org.apache.kafka/kafka-clients "0.9.0.1"]
+                           [ymilky/franzy-common "0.0.1"]]
             :plugins [[lein-codox "0.9.4"]]
             :codox {:metadata    {:doc/format :markdown}
                     :doc-paths   ["README.md"]
