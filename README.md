@@ -1,24 +1,27 @@
 # Franzy
 
-Franzy is a suite of Clojure libraries for [Apache Kafka](http://kafka.apache.org/documentation.html). It includes libraries for Kafka consumers, producers, partitioners, callbacks, serializers, and deserializers, as well as an admin client, embedded Kafka brokers, validations for all major Kafka types, configuration management.
+Franzy is a suite of Clojure libraries for [Apache Kafka](http://kafka.apache.org/documentation.html). It includes libraries for Kafka consumers, producers, partitioners, callbacks, serializers, and deserializers. Additionally, there are libraries for administration, testing, mocking, running embedded Kafka brokers and zookeeper clusters, and more.
 
-The main goal of Franzy is to make life easier for working with Kafka from Clojure. Franzy provides a foundation for building higher-level abstractions for whatever your needs might be when interacting with Kafka.
+The main goal of Franzy is to make life easier for working with Kafka from Clojure. Franzy provides a foundation for building higher-level abstractions for whatever your needs might be.
 
 ## Platform
 
 Franzy breaks up its functionality into several different libraries to minimize dependency issues, especially on differing Kafka dependencies (ex: Server vs. Consumer/Producer).
 
-* [Franzy](https://github.com/ymilky/franzy) - This library - core client-oriented functionality, i.e. consumer, producer, schemas, more.
-* [Franzy Common](https://github.com/ymilky/franzy-common) - Common functionality for any Franzy development, and useful code that doesn't require any Kafka dependencies
-* [Franzy Admin](https://github.com/ymilky/franzy-admin) - Administer Kafka with Clojure, get Clojure data in/out.
-* [Franzy Mocks](https://github.com/ymilky/franzy-mocks) -  Test your consumers and producers without a running Kafka cluster, and more in the future.
-* [Franzy Nippy](https://github.com/ymilky/franzy-nippy) - Nippy Serializer/Deserializer for Kafka.
-* [Franzy Fressian](https://github.com/ymilky/franzy-fressian) - Fressian Serializer/Deserializer for kafka.
-* [Franzy JSON](https://github.com/ymilky/franzy-json) - JSON/SMILE Serializer/Deserialzer for Kafka.
-* [Franzy Transit](https://github.com/ymilky/franzy-transit) - Transit Serializer/Deserializer for Kafka.
-* [Franzy Embedded](https://github.com/ymilky/franzy-embedded) - Full featured embedded Kafka server for testing/dev, with multiple implementations including concrete types and components.
-* [Franzy Examples](https://github.com/ymilky/franzy-examples) - Growing project of examples using all the above, to learn at your leisure.
-
+| Name                                                         | Type               | Description                                                                                                                 | Major Dependencies                                   |
+|--------------------------------------------------------------|--------------------|-----------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------|
+| [Franzy](https://github.com/ymilky/franzy)                   | client             | This library - core client-oriented functionality, i.e. consumer, producer, schemas, more.                                  | Franzy-Common, Kafka client                          |
+| [Franzy Admin](https://github.com/ymilky/franzy-admin)       | client             | Administer Kafka with Clojure, get Clojure data in/out, create topics, add partitions, list brokers, etc.                   | Franzy-Common, Kafka server (Scala/Java)             |
+| [Franzy Common](https://github.com/ymilky/franzy-common)     | lib                | Common functionality for any Franzy development, and useful for Kafka in general                                            | Clojure, Schema                                      |
+| [Franzy Nippy](https://github.com/ymilky/franzy-nippy)       | de/serializer      | Nippy Serializer/Deserializer for Kafka.                                                                                    | [Nippy](https://github.com/ptaoussanis/nippy)        |
+| [Franzy Transit](https://github.com/ymilky/franzy-transit)   | de/serializer      | Transit Serializer/Deserializer for Kafka.                                                                                  | [Transit](https://github.com/cognitect/transit-clj)  |
+| [Franzy JSON](https://github.com/ymilky/franzy-json)         | de/serializer      | JSON/Smile Serializer/Deserializer for Kafka.                                                                               | [Cheshire](https://github.com/dakrone/cheshire)      |
+| [Franzy Fressian](https://github.com/ymilky/franzy-fressian) | de/serializer      | Fressian Serializer/Deserializer for Kafka.                                                                                 | [Fressian](https://github.com/clojure/data.fressian) |
+| [Franzy Avro](https://github.com/ymilky/franzy-avro)         | de/serializer      | AVRO Serializer/Deserializer for Kafka.                                                                                     | TBD                                                  |
+| [Franzy Embedded](https://github.com/ymilky/franzy-embedded) | embedded broker    | Full featured embedded Kafka server for testing/dev, with multiple implementations including concrete types and components. | Kafka server                                         |
+| [Franzy Mocks](https://github.com/ymilky/franzy-mocks)       | testing            | Test your consumers and producers without a running Kafka cluster, and more in the future.                                  | Franzy, Kafka client                                 |
+| [Franzy Examples](https://github.com/ymilky/franzy-examples) | examples           | Growing project of examples using all the above, to learn at your leisure.                                                  | All                                                  |
+| [Travel Zoo](https://github.com/ymilky/travel-zoo)           | embedded Zookeeper | Embedded Zookeeper servers and clusters for testing and development, with concrete type and component versions available.   | Curator Test                                         |
 ## Features
 
 * Support for Kafka 0.9 (and above)
@@ -65,15 +68,11 @@ Requirements may vary slightly depending on your intended usage.
 * Clojure 1.8+ - You may be able to compile this library on/with earlier versions, but this is untested.
 * Kafka 0.9+ - Some parts may work on earlier versions, but this is untested.
 
-A good way to get started with Kafka is to use Docker and/or Vagrant. I recommend using a Docker compose stack with Kafka and Zookeeper that lets you scale up/down to test.
-
-Here's at least one to get started, feel free to submit more:
-
-* https://github.com/wurstmeister/kafka-docker
+A good way to get started with Kafka is to use Docker and/or Vagrant. I recommend using a Docker compose stack with Kafka and Zookeeper that lets you scale up/down to test. You can also use the embedded Kafka and Zookeeper libraries listed above and discussed in the Testing/Dev section.
 
 ## Installation
 
-Don't - Currently undergoing peer-review and field testing. But you're welcome to try. Please provide feedback if you encounter an issue.
+Currently undergoing peer-review and field testing. It works so far for many people and organizations, but requires more testing. You're welcome to try. Please provide feedback if you encounter an issue.
 
 ```
 [ymilky/franzy "0.0.1"]
@@ -524,6 +523,10 @@ Both libraries above provide concrete types for auditing, avoiding reflection, e
 
 Another option is to use docker containers. I have successfully tested both of the above options mixed with docker without issue. In general, be sure all servers can see each other on the network to avoid problems.
 
+Here's at least one Docker image that uses Docker compose and includes Zookeeper and Kafka.
+
+* https://github.com/wurstmeister/kafka-docker
+
 ## Contributing/Roadmap
 
 This library is still very young and is surely filled with bugs. Pull requests are welcome.
@@ -537,7 +540,7 @@ Of particular concern/value to fix/refactor/enhance currently:
 * Async helpers, examples, particularly with core.async and/or manifold
 * Useful transformations/eductions/transductions/whatever for working with the various data structures to/from Kafka
 
-Please be aware many problems/issues may be due to Kafka itself or the Java API. As such, before submitting issues, please check these issue trackers first. If there is a reasonable workaround or solution, please leave a note and link to the underlying issues.
+Please be aware many problems/issues may be due to Kafka itself or the Java API. As such, before submitting issues, please check the Kafka official issue trackers first. If there is a reasonable workaround or solution, please leave a note and link to the underlying issues.
 
 ## Contact
 
