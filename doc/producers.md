@@ -8,6 +8,8 @@ Kafka guarantees ordering within a partition, but not between partitions. You ca
 
 In practice, it is generally best to know up front where you are sending your data and why. For example, to provide parallelism to scale consumers, you might elect to place different user data in different partitions. Selecting a partition per user would usually be a bad idea and is a common misconception for beginners. Among many reasons, you will eventually hit scalability limits that are linked more to the underlying file descriptors that need to be allocated than anything else in Kafka. Instead, when deciding how to partition your data when producing, you should think how you can bucket data in ways that make sense for both your ordering and scalability needs. If you have for example a few super users who cause logjams in your consumers, you might elect to spread their data into different partitions.
 
+A producer can produce data by sending a producer record to Kafka. A producer record can be passed to the `send-sync!` or `send-async!` protocols as a map, producer record type, or as explicit parameters. You should explicitly provide the topic, partition, key, and value if you know up front where your data should go. If you are a more advanced user and want to let a Kafka partitioner do the job, you may provide only the topic and value, or topic, key, and value depending on the partitioner implementation and data format. 
+
 ## Encapsulating a Producer
 
 Typically you will want to encapsulate your producer somehow to be able to maintain a reference to it and avoid recreating it as previously discussed.
