@@ -10,6 +10,26 @@ In practice, it is generally best to know up front where you are sending your da
 
 A producer can produce data by sending a producer record to Kafka. A producer record can be passed to the `send-sync!` or `send-async!` protocols as a map, producer record type, or as explicit parameters. You should explicitly provide the topic, partition, key, and value if you know up front where your data should go. If you are a more advanced user and want to let a Kafka partitioner do the job, you may provide only the topic and value, or topic, key, and value depending on the partitioner implementation and data format. 
 
+## Partitioners
+
+### Default Partitioner
+
+The default partitioning strategy is as follows, via (DefaultPartitioner):
+
+ * If a partition is specified in the record, use it
+ * If no partition is specified but a key is present choose a partition based on a hash of the key
+ * If no partition or key is present choose a partition in a round-robin fashion
+
+Take special notice of the case when the key is present - your key will be hashed with murmur2.
+
+### Rolling Your Own Partitioner
+
+If you want to avoid calling your own partition function each time to calculate a partition before you produce, you can provide a `partitioner.class` key to your producer configuration. This class should be discoverable on your classpath, given the string value fully-qualified class name for the configuration key.
+
+You will need to implement the Partitioner interface. You of course can roll this in pure Java, or simply use deftype/gen-class and if needed, AOT compilation. Of course there's nothing preventing you from instead just manually calling your own function, but the advantage to providing it via configuration is it prevents any of your client code from missing this curcial step which would lead to undesirable effects in your partitioning strategy given an error.
+
+As a best practice, you should decide your partitioning strategy before creating your topic and adding data to partitions. Failure to do so may lead to situations where your pre-existing data is not partitioned according to the same strategy as future data. Since your partitioning strategy will play a role in how the data is consumed and in what order (per partition), this can have some dire consequences in some systems. If you forget, a simple fix is to replay your log until the point in time where you changed your partitioning strategy, and then write the old records into new partitions if possible, or replay all the data into a new topic. The former is doable only if the old data does not need to be ordered before existing data or you are going to rewrite all the day. The latter solution is usually cleaner and easier to implement.
+
 ## Encapsulating a Producer
 
 Typically you will want to encapsulate your producer somehow to be able to maintain a reference to it and avoid recreating it as previously discussed.
