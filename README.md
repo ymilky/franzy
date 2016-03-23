@@ -122,12 +122,13 @@ See [Serializers](https://github.com/ymilky/franzy/blob/master/doc/serialization
 
 ### Producers
 
-For production use, ensure you are not creating/recreating the producer constantly. Additionally, be sure you are not holding any stray references before shutting down the producer. The examples below are only for getting a feel for what is possible in the API, actual usage will vary greatly depending on your data flow.
+For some general information about producers, check the source for many comments, read the browsable api, and skim this short, but growing [producer guide](https://github.com/ymilky/franzy/blob/master/doc/producers.md).
 
-
-Creating a producer, using some options just like in a Kafka properties file, but more Clojure-like:
+There are many ways to use and create producers. Below are a few naive examples of creating producers.
 
 ```clojure
+;;Creating a producer with a few simple config values and options to show what can be done, your usage will vary
+
 (let [pc {:bootstrap.servers ["127.0.0.1:9092"]
           :retries           1
           :batch.size        16384
