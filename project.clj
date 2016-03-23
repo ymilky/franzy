@@ -1,4 +1,4 @@
-(defproject ymilky/franzy "0.0.1"
+(defproject ymilky/franzy "0.0.2-SNAPSHOT"
             :description "Clojure Kafka client with support for Kafka producer, consumer, rebalancing, administration, and validation."
             :url "https://github.com/ymilky/franzy"
             :author "ymilky and others, but see README"
