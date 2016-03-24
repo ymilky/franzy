@@ -8,14 +8,18 @@ Your usage of serializer and options should always be symmetrical. That is, what
 
 Alternatively, you may specify the serializer/deserializer via qualified class reference by using the Kafka config properties:
 
-* `value.serializer` - serializes your values, ex: "org.apache.kafka.common.serialization.StringSerializer"
-* `key.serializer` - serializes your keys, ex: "org.apache.kafka.common.serialization.LongSerializer"
-* `value.deserializer` - deserializes your values "org.apache.kafka.common.serialization.StringDeserializer"
-* `key.deserializer` - deserializes your keys, ex: "org.apache.kafka.common.serialization.LongDeserializer"
+| Name                 | Description              | Example                                                      |
+|----------------------|--------------------------|--------------------------------------------------------------|
+| `value.serializer`   | serializes your values   | `"org.apache.kafka.common.serialization.StringSerializer"`   |
+| `key.serializer`     | serializes your keys     | `"org.apache.kafka.common.serialization.LongSerializer"`     |
+| `value.deserializer` | deserializes your values | `"org.apache.kafka.common.serialization.StringDeserializer"` |
+| `key.deserializer`   | deserializes your keys   | `"org.apache.kafka.common.serialization.LongDeserializer"`   |
 
 ## Serializers/Deserializers
 
-The following serializers/deserializers are currently/planned to be available for your use:
+Please create a work item if there is a serializer you need that is missing. One of the goals of Franzy is to provide comprehensive serialization solutions that can be added as libraries to minimize the impact of serializer related dependencies and development roadblocks.
+
+The following serializers/deserializers are currently available or planned for your use:
 
 | Name                 | Speed                      | Compression              | Ease of Use                                                                      |
 |----------------------|----------------------------|--------------------------|----------------------------------------------------------------------------------|
