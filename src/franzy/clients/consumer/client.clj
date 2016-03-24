@@ -337,7 +337,7 @@
   ([config :- cs/ConsumerConfig
     options :- (s/maybe cs/ConsumerOptions)]
     (-> config
-        ^Properties (config-codec/decode)
+        ^Properties (config-codec/encode)
         (KafkaConsumer.)
         (FranzConsumer. (defaults/make-default-consumer-options options))))
   ([config :- cs/ConsumerConfig
