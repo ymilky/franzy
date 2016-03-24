@@ -4,7 +4,7 @@
   See http://kafka.apache.org/090/javadoc/org/apache/kafka/common/package-summary.html"
   (:require [franzy.clients.consumer.types :as ct])
   (:import (java.util Map Set Collection List)
-           (org.apache.kafka.common MetricName PartitionInfo Node TopicPartition)
+           (org.apache.kafka.common MetricName PartitionInfo Node TopicPartition Cluster)
            (org.apache.kafka.clients.producer ProducerRecord RecordMetadata)
            (org.apache.kafka.clients.consumer OffsetAndMetadata ConsumerRecord ConsumerRecords$ConcatenatedIterable OffsetResetStrategy ConsumerRecords)
            (org.apache.kafka.common.metrics KafkaMetric)))
@@ -141,6 +141,11 @@
          (fn [m [k v]] (assoc! m (map->topic-partition k) v)) (transient {}))
        (persistent!)))
 
+(defn map->Cluster
+  "Converts a map of cluster metadata to a Cluster Java metadata object."
+  [{:keys [nodes partitions unauthorized-topics]}]
+  ((Cluster. (map map->node nodes) (map map->partition-info partitions) (into #{} unauthorized-topics))))
+
 (defn lazy-consumer-records
   "Creates a lazy wrapper around Java ConsumerRecordsConcatenatedIterables.
   Useful if you want to create a wrapper or consume existing Java Kafka client code."
@@ -241,6 +246,20 @@
          ;;some weirdness here with things like -Infinity/Infinity when they probably didn't want to use a nullable double,
          ;;might want to drop it from the map, return nil for the entire map, or just leave it as -Infinity?
          :value       (if (Double/isInfinite metric-value) nil metric-value)})))
+
+  Cluster
+  (encode [cluster] cluster)
+  ;;Note: this object is a bit richer than just returning a map, so for querying the extra data, don't decode it,
+  ;instead used the provided cluster protocol
+  (decode [cluster]
+    {:nodes (->> (.nodes cluster)
+                 (decode))
+     :topics (->> (.topics cluster)
+                  (decode))
+     :unauthorized-topics (->> (.unauthorizedTopics cluster)
+                               (decode))})
+
+
 
   List
   (encode [v] v)
