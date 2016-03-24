@@ -32,6 +32,7 @@ The following serializers/deserializers are currently/planned to be available fo
 | Fressian             | good                       | very good                | good, but prefer nippy in most cases unless domain reasons                       |
 | Debug                | poor/depends               | depends                  | ok, not intended for production use, but can compose anything and pass back info |
 | Transit              | great                      | good                     | great, but should match use case, otherwise prefer nippy                         |
+| Avro                 | great                      | great                    | poor, a bit pedantic and requires up-front schema                                |
 | UUID/SQUID (planned) | great                      | none                     | poor, useful for keys or simple data only                                        |
 | Gzip (planned)       | great                      | very good                | prefer nippy, unless specific domain reason                                      |
 
@@ -49,4 +50,4 @@ The following serializers/deserializers are currently/planned to be available fo
 * [Franzy-Nippy](https://github.com/ymilky/franzy-nippy) - Nippy serialization - *highly recommended*
 * [Franzy-Fressian](https://github.com/ymilky/franzy-fressian) - [Fressian](https://github.com/Datomic/fressian) serialization, especially useful for those integrating with [Datomic](http://www.datomic.com)
 * [Franzy Transit](https://github.com/ymilky/franzy-transit) - [Transit]() with support for JSON, JSON-verbose, msgpack
-* More soon...
+* [Franzy Avro](https://github.com/ymilky/franzy-avro) - [Avro](https://avro.apache.org/) with support for EDN
