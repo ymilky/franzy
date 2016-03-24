@@ -39,13 +39,13 @@ The following serializers/deserializers are currently/planned to be available fo
 # Available Serializers
 
 * EDN - built-in, good for Clojure data values
-* Simple EDN - built-in, built-in, good for Clojure data values
+* Simple EDN - built-in, good for small Clojure values
 * Integer - built-in, good for keys
 * Long - built-in, good for keys
 * String built-in, good for keys
-* Byte Array - built-in, good for values
+* Byte Array - built-in, good for values, use if you want to manually handle de/serialization for some strange reason
 * Keyword - built-in, good for keys
-* Debug - built-in, good for debugging, a shocker
+* Debug - built-in, good for debugging, a shocker - can compose other serializers and log the output
 * [Franzy-JSON](https://github.com/ymilky/franzy-json) - JSON Serialization with optional Smile support
 * [Franzy-Nippy](https://github.com/ymilky/franzy-nippy) - Nippy serialization - *highly recommended*
 * [Franzy-Fressian](https://github.com/ymilky/franzy-fressian) - [Fressian](https://github.com/Datomic/fressian) serialization, especially useful for those integrating with [Datomic](http://www.datomic.com)
