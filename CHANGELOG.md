@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file. This change
 
 ### Added
 
+- Parsers for connection data/connection strings
 - Cluster Metadata support and associated functionality
 - Helpers for working with topic partitions
 - Ability to create a partition destination to test/develop or for special use-cases for partitioners
