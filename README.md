@@ -532,6 +532,18 @@ Here's at least one Docker image that uses Docker compose and includes Zookeeper
 
 This library is still very young and is surely filled with bugs. Pull requests are welcome.
 
+The following items are planned or have received partial development, I make no guarantees on timelines but plan to release some of these items in conjunction with getting other real-world work done using them:
+
+* Pool for holding on to consumers/producers and related objects where there is less of a clear path for managing the lifetime/instantiation of an object and disposing it. Some examples - Logging, Plugins for other libraries such as Onyx, Service Calls
+* Logging directly to Kafka via Timbre - dump logs directly into Kafka, presumably to process/dump them somewhere else. Useful for people with high log volumes or need some secondary processing of logs in a system like Logstash, Samza, Onyx, etc.
+* Some async helpers/patterns - Many of these might just be samples, but for more generic async tools, more may be released.
+* Additional tools and testing helpers, ex: parsing broker lists from franzy-admin directly to producer/consumer connnection strings.
+* Even more admin tools - combining some of the existing franzy-admin operations that are naturally part of common larger operations
+* Performance tweaks - some minor optimization and tweaks where possible given real-world benchmarking and usage
+* Additional partitioning strategies - ex: using different hashing techniques or supporting more narrow, but common use-cases for producer partitioning
+
+Please contact me if any of these are high-demand for you so I can guage the urgency better.
+
 Of particular concern/value to fix/refactor/enhance currently:
 
 * Schemas - raw, and while working, may have mistakes, which in part may be to incorrect Kafka documentation. While the Kafka source was used for some of the harder parts of this library, much of the schema came from reading the documentation. Many mistakes have already been caught. Moreover, as Kafka grows and changes, config values are often the most in flux.
