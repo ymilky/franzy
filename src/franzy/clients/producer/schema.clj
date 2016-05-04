@@ -69,7 +69,8 @@
    (s/optional-key :ssl.cipher.suites)                        fs/StringOrStringList
    (s/optional-key :ssl.endpoint.identification.algorithm)    s/Str
    (s/optional-key :ssl.keymanager.algorithm)                 s/Str
-   (s/optional-key :ssl.trustmanager.algorithm)               s/Str})
+   (s/optional-key :ssl.trustmanager.algorithm)               s/Str
+   (s/optional-key :schema.registry.url)                      s/Str})
 
 (def ProducerRecord
   "Schema for a Kafka Producer Record.

@@ -73,7 +73,8 @@
    (s/optional-key :ssl.cipher.suites)                        fs/StringOrStringList
    (s/optional-key :ssl.endpoint.identification.algorithm)    s/Str
    (s/optional-key :ssl.keymanager.algorithm)                 s/Str
-   (s/optional-key :ssl.trustmanager.algorithm)               s/Str})
+   (s/optional-key :ssl.trustmanager.algorithm)               s/Str
+   (s/optional-key :schema.registry.url)                      s/Str})
 
 (def ConsumerRecord
   "Schema for a Kafka Consumer Record.
